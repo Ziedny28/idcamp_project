@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:idcamp_project/model/item.dart';
+import 'package:idcamp_project/providers/cart_provider.dart';
+import 'package:provider/provider.dart';
 
 class ItemDetail extends StatelessWidget {
   final Item item;
@@ -7,6 +9,7 @@ class ItemDetail extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final provider = Provider.of<CartProvider>(context);
     return Scaffold(
       body: Column(
         children: [
@@ -57,6 +60,14 @@ class ItemDetail extends StatelessWidget {
                 const SizedBox(
                   height: 10,
                 ),
+                ElevatedButton.icon(
+                    onPressed: () {
+                      provider.toggleCart(item);
+                    },
+                    icon: provider.isExist(item)
+                        ? const Icon(Icons.shopping_cart)
+                        : const Icon(Icons.shopping_cart_checkout),
+                    label: const Text("Add to cart")),
                 const Row(
                   children: [
                     Text(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:idcamp_project/cart_page.dart';
 import 'package:idcamp_project/item_detail.dart';
 import 'package:idcamp_project/model/item.dart';
 
@@ -33,7 +34,32 @@ class Home extends StatelessWidget {
           description:
               "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
           rating: 4.7),
+      Item(
+          name: "Micin",
+          price: 5000.0,
+          stock: 20,
+          imgUrl: 'micin.jpg',
+          description:
+              "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+          rating: 4.7),
+      Item(
+          name: "Minyak",
+          price: 100000.0,
+          stock: 5,
+          imgUrl: 'minyak.jpg',
+          description:
+              "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+          rating: 4.7),
+      Item(
+          name: "Sambal",
+          price: 8000.0,
+          stock: 100,
+          imgUrl: 'sambal.jpg',
+          description:
+              "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+          rating: 4.7),
     ];
+
     return Scaffold(
       appBar: AppBar(
         title: const Text("Toko"),
@@ -47,6 +73,16 @@ class Home extends StatelessWidget {
                   (item) => ItemGridBox(item: item),
                 )
                 .toList()),
+      ),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () {
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => const CartPage(),
+            ),
+          );
+        },
+        label: const Text("Cart"),
       ),
     );
   }
