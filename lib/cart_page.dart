@@ -53,33 +53,38 @@ class _CartPageState extends State<CartPage> {
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             Expanded(
-                              flex: 1,
-                              child: Image.asset(
-                                "images/${item.imgUrl.toString()}",
-                                alignment: Alignment.centerLeft,
-                              ),
-                            ),
+                                flex: 1,
+                                child: Image(
+                                  image: AssetImage(
+                                    "assets/images/${item.imgUrl.toString()}",
+                                  ),
+                                  alignment: Alignment.centerLeft,
+                                )),
                             Expanded(
                               child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
                                     item.name.toString(),
                                     textAlign: TextAlign.left,
                                   ),
                                   Text(
-                                    item.price.toString(),
+                                    "Rp.${item.price.toString()}",
                                     textAlign: TextAlign.left,
                                   ),
                                 ],
                               ),
                             ),
                             Expanded(
-                                child: InkWell(
-                                    onTap: () {
-                                      toggleItemCheckOut(item);
-                                    },
-                                    child: const Icon(
-                                        Icons.check_box_outline_blank))),
+                              child: InkWell(
+                                onTap: () {
+                                  toggleItemCheckOut(item);
+                                },
+                                child: Icon(isItemInCheckOut(item)
+                                    ? Icons.check_box
+                                    : Icons.check_box_outline_blank),
+                              ),
+                            ),
                           ],
                         ),
                       ),
@@ -87,7 +92,7 @@ class _CartPageState extends State<CartPage> {
                   )
                   .toList(),
             ),
-            Text(total.toString())
+            Text("Total: Rp.${total.toString()}")
           ],
         ),
       ),

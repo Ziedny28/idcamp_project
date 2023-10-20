@@ -108,7 +108,7 @@ class ItemGridBox extends StatelessWidget {
             clipBehavior: Clip.hardEdge,
             child: Column(
               children: [
-                Image.asset('images/${item.imgUrl}'),
+                Image(image: AssetImage('assets/images/${item.imgUrl}')),
                 Column(
                   children: [
                     Text(item.name),

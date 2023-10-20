@@ -19,7 +19,7 @@ class ItemDetail extends StatelessWidget {
                 height: 250, //mengatur tinggi
                 width: double.infinity, //membuatnya mengikuti ukuran width
                 child: Image.asset(
-                  "images/${item.imgUrl.toString()}",
+                  "assets/images/${item.imgUrl.toString()}",
                   fit: BoxFit.fitWidth, //fitting width
                 ),
               ),
@@ -51,7 +51,8 @@ class ItemDetail extends StatelessWidget {
                   child: Column(
                     children: [
                       ItemVariables(
-                          variable: "Price", value: item.price.toString()),
+                          variable: "Price",
+                          value: "Rp.${item.price.toString()}"),
                       ItemVariables(
                           variable: "Stock", value: item.stock.toString()),
                     ],
