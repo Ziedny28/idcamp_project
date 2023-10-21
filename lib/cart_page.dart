@@ -45,54 +45,67 @@ class _CartPageState extends State<CartPage> {
             Column(
               children: items
                   .map(
-                    (item) => SizedBox(
-                      height: 100,
-                      child: Card(
-                        clipBehavior: Clip.hardEdge,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Expanded(
-                                flex: 1,
-                                child: Image(
-                                  image: AssetImage(
-                                    "assets/images/${item.imgUrl.toString()}",
-                                  ),
-                                  alignment: Alignment.centerLeft,
-                                )),
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    item.name.toString(),
-                                    textAlign: TextAlign.left,
-                                  ),
-                                  Text(
-                                    "Rp.${item.price.toString()}",
-                                    textAlign: TextAlign.left,
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Expanded(
-                              child: InkWell(
-                                onTap: () {
-                                  toggleItemCheckOut(item);
-                                },
-                                child: Icon(isItemInCheckOut(item)
-                                    ? Icons.check_box
-                                    : Icons.check_box_outline_blank),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
+                    (item) => InkWell(
+                      onTap: () {
+                        toggleItemCheckOut(item);
+                      },
+                      child: CartCard(
+                          item: item,
+                          check: isItemInCheckOut(item)
+                              ? Icons.check_box
+                              : Icons.check_box_outline_blank),
                     ),
                   )
                   .toList(),
             ),
             Text("Total: Rp.${total.toString()}")
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class CartCard extends StatelessWidget {
+  final Item item;
+  final IconData check;
+  const CartCard({super.key, required this.check, required this.item});
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 100,
+      child: Card(
+        clipBehavior: Clip.hardEdge,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Expanded(
+                flex: 1,
+                child: Image(
+                  image: AssetImage(
+                    "assets/images/${item.imgUrl.toString()}",
+                  ),
+                  alignment: Alignment.centerLeft,
+                )),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    item.name.toString(),
+                    textAlign: TextAlign.left,
+                  ),
+                  Text(
+                    "Rp.${item.price.toString()}",
+                    textAlign: TextAlign.left,
+                  ),
+                ],
+              ),
+            ),
+            Expanded(
+              child: Icon(check),
+            ),
           ],
         ),
       ),

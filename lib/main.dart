@@ -15,10 +15,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
       create: (context) => CartProvider(),
-      child: const SafeArea(
+      child: SafeArea(
         child: MaterialApp(
           title: 'Flutter Demo',
-          home: Home(),
+          home: const Home(),
+          theme: ThemeData(fontFamily: 'Poppins'),
         ),
       ),
     );

@@ -62,7 +62,12 @@ class Home extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Toko"),
+        title: const Row(
+          children: [
+            Text("Toko"),
+            Icon(Icons.shopping_cart),
+          ],
+        ),
       ),
       body: Container(
         padding: const EdgeInsets.all(8),
@@ -108,10 +113,24 @@ class ItemGridBox extends StatelessWidget {
             clipBehavior: Clip.hardEdge,
             child: Column(
               children: [
-                Image(image: AssetImage('assets/images/${item.imgUrl}')),
+                SizedBox(
+                  height: 100,
+                  width: double.infinity,
+                  child: Image(
+                    image: AssetImage('assets/images/${item.imgUrl}'),
+                    fit: BoxFit.fitWidth,
+                  ),
+                ),
                 Column(
                   children: [
                     Text(item.name),
+                    Text(
+                      "Rp.${item.price.toString()}",
+                      style: const TextStyle(
+                        fontSize: 12,
+                        color: Colors.blueGrey,
+                      ),
+                    ),
                     RatingBarIndicator(
                       rating: item.rating,
                       itemBuilder: (context, index) => const Icon(
