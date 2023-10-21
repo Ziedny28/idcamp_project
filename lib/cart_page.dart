@@ -58,7 +58,39 @@ class _CartPageState extends State<CartPage> {
                   )
                   .toList(),
             ),
-            Text("Total: Rp.${total.toString()}")
+            Text("Total: Rp.${total.toString()}"),
+            const SizedBox(
+              height: 50,
+            ),
+            total != 0
+                ? TextButton(
+                    onPressed: () => showDialog<String>(
+                      context: context,
+                      builder: (BuildContext context) => AlertDialog(
+                        title: const Text('Konfirmasi Checkout'),
+                        content: const Text(
+                            'Apakah anda yakin akan melakukan checkout'),
+                        actions: <Widget>[
+                          TextButton(
+                            onPressed: () => Navigator.pop(context, 'Cancel'),
+                            child: const Text('Cancel'),
+                          ),
+                          TextButton(
+                            onPressed: () => Navigator.pop(context, 'OK'),
+                            child: const Text('OK'),
+                          ),
+                        ],
+                      ),
+                    ),
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all(Colors.blue),
+                    ),
+                    child: Text(
+                      "Checkout",
+                      style: TextStyle(color: Colors.blue.shade50),
+                    ),
+                  )
+                : const SizedBox(),
           ],
         ),
       ),

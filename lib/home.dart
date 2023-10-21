@@ -1,3 +1,6 @@
+import 'dart:math';
+
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:idcamp_project/cart_page.dart';
@@ -60,6 +63,8 @@ class Home extends StatelessWidget {
           rating: 4.7),
     ];
 
+    List<Item> carouselItem = pickRandomElements(items, 3);
+
     return Scaffold(
       appBar: AppBar(
         title: const Row(
@@ -69,15 +74,35 @@ class Home extends StatelessWidget {
           ],
         ),
       ),
-      body: Container(
-        padding: const EdgeInsets.all(8),
-        child: GridView.count(
-            crossAxisCount: 2,
-            children: items
-                .map(
-                  (item) => ItemGridBox(item: item),
-                )
-                .toList()),
+      body: Column(
+        children: [
+          Container(
+            padding: const EdgeInsets.all(8),
+            child: CarouselSlider(
+              options: CarouselOptions(
+                height: 200.0,
+              ),
+              items: carouselItem.map(
+                (item) {
+                  return CarouselItem(item: item);
+                },
+              ).toList(),
+            ),
+          ),
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.all(8),
+              child: GridView.count(
+                crossAxisCount: 2,
+                children: items
+                    .map(
+                      (item) => ItemGridBox(item: item),
+                    )
+                    .toList(),
+              ),
+            ),
+          ),
+        ],
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
@@ -90,6 +115,24 @@ class Home extends StatelessWidget {
         label: const Text("Cart"),
       ),
     );
+  }
+
+  List<T> pickRandomElements<T>(List<T> list, int count) {
+    if (count > list.length) {
+      throw ArgumentError("Count cannot be greater than the list length.");
+    }
+
+    Random random = Random();
+    List<T> pickedElements = [];
+    List<T> copyList = List.from(list);
+
+    for (int i = 0; i < count; i++) {
+      int randomIndex = random.nextInt(copyList.length);
+      pickedElements.add(copyList[randomIndex]);
+      copyList.removeAt(randomIndex);
+    }
+
+    return pickedElements;
   }
 }
 
@@ -148,6 +191,62 @@ class ItemGridBox extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+}
+
+class CarouselItem extends StatelessWidget {
+  final Item item;
+  const CarouselItem({super.key, required this.item});
+  @override
+  Widget build(BuildContext context) {
+    return Builder(
+      builder: (BuildContext context) {
+        return InkWell(
+          onTap: () {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) => ItemDetail(item: item),
+              ),
+            );
+          },
+          child: Container(
+            width: MediaQuery.of(context).size.width,
+            margin: const EdgeInsets.symmetric(horizontal: 5.0),
+            decoration: const BoxDecoration(
+              borderRadius: BorderRadius.all(
+                Radius.circular(10),
+              ),
+            ),
+            child: Stack(
+              children: [
+                SizedBox(
+                  width: double.infinity,
+                  height: double.infinity,
+                  child: ClipRRect(
+                    borderRadius: const BorderRadius.all(
+                      Radius.circular(10),
+                    ),
+                    child: Image(
+                      image: AssetImage('assets/images/${item.imgUrl}'),
+                      fit: BoxFit.fill,
+                      color: Colors.black26,
+                      colorBlendMode: BlendMode.darken,
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8),
+                  child: Text(
+                    item.name.toString(),
+                    style: const TextStyle(fontSize: 16.0, color: Colors.white),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
     );
   }
 }
